@@ -19,13 +19,13 @@ plt.rcParams.update(params)
 N = 5
 B       = 40  * 2*pi
 Omega_0 = 8   * 2*pi
-Delta_0 = 16   * 2*pi
+Delta_0 = 16  * 2*pi
 Gamma   = 0.5 * 1e-3 * 2*pi
 
 
 # Directories
 current_dir = os.getcwd()
-data_dir = os.path.join(current_dir, 'DATA_N5_improved/B40_Omega8_Delta16/')
+data_dir = os.path.join(current_dir, 'Data_N5/improved/B40_Omega8_Delta16/')
 
 # Load data
 sorted_dirs = sorted(os.listdir(data_dir))
@@ -33,7 +33,7 @@ two_theta   = np.array([float(directory[4:]) for directory in sorted_dirs])[::-1
 two_tau     = two_theta / Omega_0 / 0.75270854
 fid         = np.load(os.path.join(current_dir, 'DATA_N5_perturbed/B40_Omega8_Delta16/ratio1.0.npy'))[::-1]
 
-fid_r      = np.load(os.path.join(current_dir, 'DATA_N5_randomized3/B40_Omega8_Delta16/variance0.01/fid.npy'))
+fid_r      = np.load(os.path.join(current_dir, 'Data_N5/disorder/B40_Omega8_Delta16/variance0.01/fid.npy'))
 fid_r_ave  = np.average(fid_r, axis=1)
 fid_r_dev  = np.std(fid_r, axis=1)
 fid_errors = fid_r_dev
@@ -43,34 +43,33 @@ fid_errors = fid_r_dev
 
 
 
-load_dir_improved = os.path.join(current_dir, 'DATA_N5_improved/B40_Omega8_Delta16/')
+load_dir_improved = os.path.join(current_dir, 'Data_N5/improved/B40_Omega8_Delta16/')
 areas3, fids3 = [], []
 
-for directory in [name for name in sorted(os.listdir(load_dir_improved))]:
+for directory in [name for name in sorted_dirs]:
     area = float(directory[4:])
     areas3.append(area)
     fid_im3 = np.load(load_dir_improved + directory + '/Fidelity.npy')
-    opt_par3 = np.load(load_dir_improved + directory + '/Opt_par.npy')
+    # opt_par3 = np.load(load_dir_improved + directory + '/Opt_par.npy')
+    #
+    # system = Hamiltonians(num_of_atoms=N)
+    # system.chain()
+    # system.rydberg_3D_array_vdw(block=B, decay_r=0, power=6, flip_b=True)
+    #
+    # T = area / Omega_0 / 0.75270854
+    # system.double_chirped_linear(t=T,
+    #                              amplitude=Omega_0,
+    #                              delta=Delta_0,
+    #                              dev=T / 2 / 2.5, power=8)
 
-    system = Hamiltonians(num_of_atoms=N)
-    system.chain()
-    system.rydberg_3D_array_vdw(block=B, decay_r=0, power=6, flip_b=True)
-
-    T = area / Omega_0 / 0.75270854
-    system.double_chirped_linear(t=T,
-                                 amplitude=Omega_0,
-                                 delta=Delta_0,
-                                 dev=T / 2 / 2.5, power=8)
-
-    optimizer = Optimizer()
-    optimizer.configure(input_states =[],
-                        target_states=[],
-                        initial_guess  =opt_par3,
-                        factors=np.array([1, 2, 1]),
-                        mute_mask   =[0, 1],
-                        systems=(system1, system2, system3),
-                        arrangements=None)
-    optimizer.update_pulses()
+    # optimizer = Optimizer()
+    # optimizer.configure(input_states =[],
+    #                     target_states=[],
+    #                     initial_guess  =opt_par3,
+    #                     factors=np.array([1, 2, 1]),
+    #                     mute_mask   =[0, 1],
+    #                     systems=(system1, system2, system3),)
+    # optimizer.update_pulses()
     fids3.append(fid_im3)
 two_tau3 = np.array(areas3) / Omega_0 / 0.75270854
 fids3 = np.array(fids3)
@@ -86,7 +85,7 @@ fids3 = np.array(fids3)
 
 
 
-load_dir_improved = os.path.join(current_dir, 'DATA_N5_improved/B40_Omega8_Delta16/')
+# load_dir_improved = os.path.join(current_dir, 'DATA_N5_improved/B40_Omega8_Delta16/')
 areas, fids = [], []
 times1, times2, times3 = 0, 0, 0
 pulse0, pulse1, pulse2, pulse3 = 0, 0, 0, 0
@@ -137,8 +136,7 @@ for directory in [name for name in sorted(os.listdir(load_dir_improved))]:
 
 
 
-Proj = np.array([[0, 0],
-                 [0, 1]], dtype=np.complex128)
+Proj = np.array([[0, 0], [0, 1]], dtype=np.complex128)
 number_op1 = 0
 number_op2 = 0
 number_op3 = 0

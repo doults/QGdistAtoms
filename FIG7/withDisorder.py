@@ -9,6 +9,8 @@ B       = 40 * 2*pi
 Omega_0 = 8  * 2*pi
 Delta_0 = 16 * 2*pi
 variance = 0.01
+# variance = 0.0
+
 
 
 in_state3 = np.eye(2**3, dtype=np.complex128)[0]
