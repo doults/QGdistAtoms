@@ -2,7 +2,7 @@ import os
 from QMOptimize import *
 
 
-N = 5
+N       = 5
 B       = 40 * 2*pi
 Omega_0 = 8  * 2*pi
 Delta_0 = 16 * 2*pi
@@ -42,12 +42,10 @@ for ii, T in enumerate(Tlist):
                         rk_pre       =1e-9,
                         factors      =[1, 2, 1])
     optimizer.BFGS(maxiter=300, ftol=1e-10, disp=False)
-
     directory  = f'Data_N{N}/raw/'
     directory += f'/B{round(B/2/pi)}_Omega{round(Omega_0/2/pi)}_Delta{round(Delta_0 /2/pi)}'
     directory += f'/Area{round(T * Omega_0 * 0.7527, 4)}/'
     os.makedirs(directory, exist_ok=True)
     np.save(directory + 'Opt_par.npy', optimizer.opt_parameters)
     np.save(directory + 'Fidelity.npy', optimizer.fidelity)
-
     in_guess = optimizer.opt_parameters

@@ -51,20 +51,19 @@ for directory in [name for name in sorted(os.listdir(improved_dir))]:
     optimizer.configure(input_states =[],
                         target_states=[],
                         initial_guess=opt_par,
-                        factors=[],
-                        resolution=500,
+                        factors      =[],
+                        resolution   =500,
                         systems      =[system])
     optimizer.update_pulses()
-    # if area == 31.7813:
-    #     pulse0 = system.pulses[0](system.times)
-    #     times1 = system.times/system.times[-1]*2
-    #     pulse1 = system.pulses[1](system.times)
-    #     print(system.times[-1]/2)
-    #
-    # if area == 33.8622:
-    #     times2 = system.times/system.times[-1]*2
-    #     pulse2 = system.pulses[1](system.times)
-    #     print(system.times[-1]/2)
+    if area == 32.1596:
+        times1 = system.times/system.times[-1]*2
+        pulse1 = system.pulses[1](system.times)
+        print(system.times[-1]/2)
+
+    if area == 33.8622:
+        times2 = system.times/system.times[-1]*2
+        pulse2 = system.pulses[1](system.times)
+        print(system.times[-1]/2)
 
     if area == 36.6998:
         pulse0 = system.pulses[0](system.times)
@@ -163,10 +162,10 @@ inset.xaxis.set_minor_locator(MultipleLocator(0.05/3))
 
 
 
+two_tau = np.array(areas) / Omega_0 / 0.7527
 
-
-ax1.plot(np.array(areas)/2, 1-np.array(fids), color='darkblue', lw=0.6, zorder=1)
-ax1.scatter(np.array(areas)/2, 1-np.array(fids), s=5, lw=0.6, facecolors='white', edgecolors='darkblue', alpha=1, zorder=2)
+ax1.plot(two_tau/2, 1-np.array(fids), color='darkblue', lw=0.6, zorder=1)
+ax1.scatter(two_tau/2, 1-np.array(fids), s=5, lw=0.6, facecolors='white', edgecolors='darkblue', alpha=1, zorder=2)
 # ax1.plot(areas/2, 1-fid_dis_ave, color='darkred', lw=0.6, zorder=1)
 # ax1.scatter(areas/2, 1-fid_dis_ave, s=5, lw=0.6, marker='^', facecolors='white', edgecolors='darkred', alpha=1, zorder=2)
 #
@@ -180,9 +179,9 @@ ax1.scatter(np.array(areas)/2, 1-np.array(fids), s=5, lw=0.6, facecolors='white'
 
 
 ax1_up.scatter(np.array(areas)/2, np.zeros_like(areas))
-ax1_up.vlines([31.7813/2, 33.8622/2], ymin=1e-9, ymax=100, lw=0.3, linestyles='--', color='k')
+ax1_up.vlines([32.1596/2, 33.8622/2], ymin=1e-9, ymax=100, lw=0.3, linestyles='--', color='k')
 
-print(31.7813/2 / Omega_0 / 0.7527)
+print(32.1596/2 / Omega_0 / 0.7527)
 print(33.8622/2 / Omega_0 / 0.7527)
 print(36.6998/2 / Omega_0 / 0.7527, '\n\n\n\n')
 
@@ -190,12 +189,12 @@ print(36.6998/2 / Omega_0 / 0.7527, '\n\n\n\n')
 ax1_up.vlines([36.6998/2], ymax=4e-4, ymin=1e-9, lw=0.3, linestyles='--', color='k')
 
 
-# ax2_right.plot(times1[:500], pulse0[:500]/2/pi, lw=0.9, color='darkcyan', alpha=0.7)
-# ax3_right.plot(times2[:500], pulse0[:500]/2/pi, lw=0.9, color='darkcyan', alpha=0.7)
+ax2_right.plot(times1[:500], pulse0[:500]/2/pi, lw=0.9, color='darkcyan', alpha=0.7)
+ax3_right.plot(times2[:500], pulse0[:500]/2/pi, lw=0.9, color='darkcyan', alpha=0.7)
 ax4_right.plot(times3[:500], pulse0[:500]/2/pi, lw=0.9, color='darkcyan', alpha=0.7)
 
-# ax2.plot(times1[:500], pulse1[:500]/2/pi, lw=0.8, color='darkred')
-# ax3.plot(times2[:500], pulse2[:500]/2/pi, lw=0.8, color='darkred')
+ax2.plot(times1[:500], pulse1[:500]/2/pi, lw=0.8, color='darkred')
+ax3.plot(times2[:500], pulse2[:500]/2/pi, lw=0.8, color='darkred')
 ax4.plot(times3[:500], pulse3[:500]/2/pi, lw=0.8, color='darkred')
 
 
@@ -229,6 +228,8 @@ for ax in [ax2_right, ax3_right, ax4_right]:
 ax1.set_yscale('log', base=10)
 ax1.set_yticks([1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2,  1e-1, 1])
 ax1.set_yticklabels(['$10^{-8}$', '', '$10^{-6}$', '', '$10^{-4}$', '', '$10^{-2}$', '', '$10^0$'])
+
+ax1.xaxis.set_major_locator(MultipleLocator(0.02))
 ax1.xaxis.set_minor_locator(MultipleLocator(0.02/3))
 ax1_up.xaxis.set_minor_locator(MultipleLocator(0.5/3))
 
