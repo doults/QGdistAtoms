@@ -16,7 +16,7 @@ params = {'text.usetex'         : True,
 plt.rcParams.update(params)
 
 
-N = 5
+N       = 5
 B       = 40  * 2*pi
 Omega_0 = 8   * 2*pi
 Delta_0 = 16  * 2*pi
@@ -61,15 +61,15 @@ for directory in [name for name in sorted(os.listdir(improved_dir))]:
                         resolution   =500,
                         systems      =[system])
     optimizer.update_pulses()
-    if area == 32.1596:
+    if area == vert1:
         times1 = system.times/system.times[-1]*2
         pulse1 = system.pulses[1](system.times)
 
-    if area == 34.0513:
+    if area == vert2:
         times2 = system.times/system.times[-1]*2
         pulse2 = system.pulses[1](system.times)
 
-    if area == 36.6998:
+    if area == vert3:
         pulse0 = system.pulses[0](system.times)
         times3 = system.times/system.times[-1]*2
         pulse3 = system.pulses[1](system.times)
