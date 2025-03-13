@@ -162,12 +162,12 @@ class Optimizer(QuantumSimulator):
 
 
         elif kind == 'average':
-            _fidelity = np.abs(np.sum(_phi_chis[:, -1]))**2 + \
-                        np.sum(np.abs(_phi_chis[:, -1]/self.factors)**2 * self.factors)\
-                        / _num_of_inputs * (_num_of_inputs + 1)
-            _gradient = 2 * (np.imag(np.einsum('qit,pt->it', _chi_V_phis, _phi_chis)) +
-                             np.imag(np.einsum('qit,qt->it', _chi_V_phis, _phi_chis)))\
-                        / _num_of_inputs * (_num_of_inputs + 1)
+            print(_num_of_inputs)
+            _fidelity = (np.abs(np.sum(_phi_chis[:, -1]))**2 + np.sum(np.abs(_phi_chis[:, -1]/self.factors)**2 * self.factors)
+                         / _num_of_inputs / (_num_of_inputs + 1))
+            _gradient = 2 * (np.imag(np.einsum('qit,pt,p->it', _chi_V_phis, _phi_chis, 1/self.factors)) +
+                             np.imag(np.einsum('qit,qt, q->it', _chi_V_phis, _phi_chis, 1/self.factors)))\
+                        / _num_of_inputs / (_num_of_inputs + 1)
         else:
             raise ValueError('The kind of fidelity was not specified correctly')
 
