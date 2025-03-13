@@ -8,9 +8,9 @@ of interacting atoms together with control pulses, while the third implements th
 Engineering (GRAPE) method for optimal control, combined with the Broyden–Fletcher–Goldfarb–Shanno (BFGS) 
 optimization method. Documentation is included within the code.
 
-Each folder (named accordingly) contains the data and executable scripts necessary to produce or reproduce 
-each figure in the manuscript. Scripts named _plot___.py generate the exact figures using the included 
-data (saved as .npy files). The remaining scripts reproduce and overwrite the included data.
+Each folder (named accordingly) contains the data and executable scripts necessary to produce and reproduce 
+each figure in the manuscript. Scripts named plot___.py generate the exact figures using the included data 
+(saved as .npy files). The remaining scripts reproduce and overwrite the included data.
 
 Requirements: Python 3.11, NumPy 1.23.5, SciPy 1.10.1, Matplotlib 3.7.1.
 Contact: gdoultsinos@iesl.forth.gr
